@@ -1,0 +1,50 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.son.bookgle.dao.UserMapper">
+    <cache />
+
+    <select id="getUserList" parameterType="int" resultType="User">
+		SELECT * FROM user ORDER BY user_id DESC limit #{start}, #{limit}
+    </select>
+
+    <select id="getUser" parameterType="long" resultType="User">
+		SELECT * FROM user WHERE user_id = #{user_id}
+    </select>
+
+    <select id="login" parameterType="String" resultType="User">
+		SELECT * FROM user where email = #{email} and password = #{password}
+    </select>
+
+    <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="user_id" keyColumn="user_id">
+		INSERT INTO 
+		user(name, number, phone, email, password, birthday)
+		VALUES
+		(#{name}, #{number}, #{phone}, #{email}, #{password}, #{birthday})
+    </insert>
+
+    <delete id="delete" parameterType="long">
+		DELETE FROM user WHERE user_id = #{user_id}
+    </delete>
+
+    <update id="updateById" parameterType="User">
+		UPDATE 
+		user
+		SET
+		phone = #{phone}, password = #{password}, birthday = #{birthday}
+		WHERE 
+		user_id = #{user_id}
+    </update>
+
+    <update id="updateByAdmin" parameterType="User">
+		UPDATE 
+		user
+		SET
+		name = #{name}, number = #{number}, phone = #{phone}, email = #{email}, birthday = #{birthday}
+		WHERE 
+		user_id = #{user_id}
+    </update>
+
+    <select id="userCount" resultType="int">
+		SELECT count(*) FROM user
+    </select>
+
+</mapper>

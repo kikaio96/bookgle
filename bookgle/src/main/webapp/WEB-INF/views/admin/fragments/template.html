@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+	<script th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+
+<!-- body 태그 내부의 header 를 담당하는 부분이다. -->
+<header th:replace="admin/fragments/header :: headerFragment"></header>
+
+<!-- 아래 div가 컨트롤러에 의해 교체되는 content 영역이다. -->
+<div layout:fragment="content"></div>
+
+<!-- body 태그 내부의 footer 를 담당하는 부분이다. -->
+<footer th:replace="admin/fragments/footer :: footerFragment"></footer>
+
+</html>

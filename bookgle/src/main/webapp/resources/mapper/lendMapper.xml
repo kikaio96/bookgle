@@ -1,0 +1,117 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.son.bookgle.dao.LendMapper">
+    <cache />
+        
+    <resultMap type="Book" id="Book">
+    	<result column="book_id" property="book_id"/>
+    	<result column="book_name" property="name"/>
+    	<result column="info" property="info"/>
+    	<result column="isbn" property="isbn"/>
+    	<result column="genre" property="genre"/>
+    	<result column="author" property="author"/>
+    	<result column="plait" property="plait"/>
+    	<result column="publisher" property="publisher"/>
+    </resultMap>
+        
+    <resultMap type="User" id="User">
+    	<result column="user_id" property="user_id"/>
+    	<result column="user_name" property="name"/>
+    	<result column="number" property="number"/>
+    	<result column="phone" property="phone"/>
+    	<result column="email" property="email"/>
+    	<result column="password" property="password"/>
+    	<result column="birthday" property="birthday"/>
+    </resultMap>
+    
+    <resultMap type="Lend" id="Lend">
+    	<result column="lend_id" property="lend_id"/>
+    	<result column="user_id" property="user_id"/>
+    	<result column="book_id" property="book_id"/>
+    	<result column="lend_date" property="lend_date"/>
+    	<result column="return_date" property="return_date"/>
+    	<association property='user' resultMap='User'/>
+    	<association property='book' resultMap='Book'/>
+    </resultMap>
+
+    <select id="getLendList" parameterType="int" resultMap="Lend">
+		SELECT 
+			lend.book_id, user.user_id, lend_id, lend_date, return_date,
+			book.name book_name, user.name user_name
+		FROM
+			lend 
+		LEFT JOIN 
+			user 
+		ON
+			lend.user_id = user.user_id
+		LEFT JOIN 
+			book 
+		ON
+			lend.book_id = book.book_id							
+		ORDER BY 
+			lend_id
+		LIMIT
+			#{start}, #{limit}
+    </select>
+
+    <select id="lendCount" resultType="int">
+		SELECT 
+			count(*) 
+		FROM 
+			lend
+    </select>
+
+    <select id="getLendListByUserId" parameterType="int" resultMap="Lend">
+		SELECT 
+			lend.book_id, user.user_id, lend_id, lend_date, return_date,
+			book.name book_name, user.name user_name
+		FROM
+			lend 
+		LEFT JOIN 
+			user 
+		ON
+			lend.user_id = user.user_id
+		LEFT JOIN 
+			book 
+		ON
+			lend.book_id = book.book_id
+		WHERE
+			lend.user_id = #{user_id}
+		ORDER BY 
+			lend_id
+		LIMIT
+			#{start}, #{limit}
+    </select>
+
+    <select id="lendCountByUserId" parameterType="int" resultType="int">
+		SELECT
+			count(*) 
+		FROM
+			lend 
+		WHERE 
+			user_id = #{user_id}
+    </select>
+
+    <insert id="insert" parameterType="Lend" useGeneratedKeys="true" keyProperty="lend_id" keyColumn="lend_id">
+		INSERT INTO 
+			lend(user_id, book_id, lend_date, return_date)
+		VALUES
+			(#{user_id}, #{book_id}, #{lend_date}, #{return_date})
+    </insert>
+
+    <delete id="delete" parameterType="long">
+		DELETE FROM 
+			lend 
+		WHERE 
+			lend_id = #{lend_id}
+    </delete>
+
+    <update id="updateById" parameterType="Lend">
+		UPDATE 
+			lend
+		SET
+			return_date = #{return_date}
+		WHERE 
+			lend_id = #{lend_id}
+    </update>
+
+</mapper>

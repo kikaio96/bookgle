@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{admin/fragments/template}"
+	>
+<head>
+	<title>도서관리</title>
+</head>
+<div layout:fragment="content">
+	<h1>도서목록</h1>
+	<a class="btn btn-primary" th:href="@{/admin/book}" role="button">+ 도서등록</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">도서명</th>
+				<th scope="col">분야</th>
+				<th scope="col">저자</th>
+				<th scope="col">출판사</th>
+				<th scope="col">isbn</th>
+				<th scope="col">보유권수</th>
+				<th scope="col">대출가능권수</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+	  	<tbody>
+		    <tr th:each="book : ${bookList}">
+		      	<td><a class="nav-link" th:href="@{/admin/books/{id}(id=${ book.book_id })}" th:text="${ book.name }"></a></td>
+		      	<td th:text="${ book.genre }"></td>
+		      	<td th:text="${ book.author }"></td>
+		      	<td th:text="${ book.publisher }"></td>
+		      	<td th:text="${ book.isbn }"></td>
+		      	<td th:text="${ book.bookState.total_count }"></td>
+		      	<td th:text="${ book.bookState.remain }"></td>
+		      	<td>
+			    	<form th:method="delete" th:action="@{/admin/books/{id}(id=${ book.book_id })}">
+			    		<input type="hidden" name="book_id" th:value="${ book.book_id }">
+			    		<input type="hidden" name="book_state_id" th:value="${ book.bookState.remain }">
+						<button type="submit" class="btn btn-primary">삭제</button>
+			   		</form>
+		    	</td>
+		    </tr>
+	  	</tbody>
+	</table>
+  	
+  	<span th:each="page : ${pageStartList}">
+  		<a href="?start=${page}" th:text="${pageStat.index + 1 }"></a>&nbsp; &nbsp;
+  	</span>
+</div>
+</html>

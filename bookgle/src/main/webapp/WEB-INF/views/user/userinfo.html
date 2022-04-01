@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{user/fragments/template}"
+	>
+<head>
+	<title>내정보</title>
+</head>
+<div layout:fragment="content">
+	<form th:method="put" th:action="@{ /user/users/{id}(id=${userInfo.user_id}) }">
+		<input type="hidden" name="user_id" th:value="${ userInfo.user_id }">
+		
+		<div class="form-group">
+		    <label for="name">이름</label><br>
+		    <label for="name" th:text="${ userInfo.name }"></label><br>
+	  	</div>
+		<div class="form-group">
+			<label for="number">사번</label><br>
+		    <label for="number" th:text="${ userInfo.number }"></label><br>
+		</div>
+		<div class="form-group">
+		    <label for="birthday">생년월일(YYYYMMDD)</label><br>
+		    <label for="birthday" th:text="${ userInfo.birthday }"></label><br>
+		</div>
+		<div class="form-group">
+			<label for="isbn">이메일</label><br>
+		    <label for="email" th:text="${ userInfo.email }"></label><br>
+		</div>
+	    <div class="form-group">
+	    	<label for="password">비밀번호</label><br>
+			<input type="password" class="form-control" name="password">
+		</div>
+	    <div class="form-group">
+	    	<label for="password">비밀번호 확인</label><br>
+			<input type="password" class="form-control" name="password_confirm">
+		</div>
+		<div class="form-group">
+		    <label for="phone">연락처</label><br>
+			<input type="text" class="form-control" name="phone" th:value="${ userInfo.phone }">
+	  	</div>
+				
+		<button type="submit" class="btn btn-primary">수정</button>
+	</form>
+	<script>
+		var param = "[[${errorResult}]]";
+		if(param == -1) {
+			alert('비밀번호가 일치하지 않습니다.');
+		}	
+		if(param == -2) {
+			alert('비밀번호를 입력해주세요.');
+		}	
+	</script>
+</div>
+</html>

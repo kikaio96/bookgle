@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{admin/fragments/template}"
+	>
+<head>
+<title>사용자관리</title>
+</head>
+<div layout:fragment="content">
+	<h1>사용자관리</h1>
+	<a class="btn btn-primary" th:href="@{user}" role="button">+ 사용자등록</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">이름</th>
+				<th scope="col">사번</th>
+				<th scope="col">이메일</th>
+				<th scope="col">휴대폰번호</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+	  	<tbody>
+		    <tr th:each="user : ${userList}">
+		      	<td><a th:href="@{ /admin/users/{id}(id=${user.user_id}) }" th:text="${ user.name }"></a></td>
+		      	<td th:text="${ user.number }"></td>
+		      	<td th:text="${ user.email }"></td>
+		      	<td th:text="${ user.phone }"></td>
+		      	<td>
+			    	<form th:method="delete" th:action="@{ /admin/users/{id}(id=${user.user_id}) }">
+			    		<input type="hidden" name="user_id" th:value="${ user.user_id }">
+						<button type="submit" class="btn btn-primary">삭제</button>
+			    	</form>
+		    	</td>
+			</tr>
+	  	</tbody>
+	</table>
+  	
+  	<span th:each="page : ${pageStartList}">
+  		<a href="?start=${page}" th:text="${pageStat.index + 1 }"></a>&nbsp; &nbsp;
+  	</span>
+</div>
+</html>

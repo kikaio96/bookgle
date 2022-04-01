@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{user/fragments/template}"
+	>
+<head>
+	<title>도서정보</title>
+</head>
+<div layout:fragment="content">
+	<form method="post" th:action="@{/user/lend}">
+		<input type="hidden" name="book_id" th:value="${ book.book_id }">
+		
+		<div class="form-group">
+		    <label for="name">도서명</label><br>
+		    <label for="name" th:text="${ book.name }"></label><br>
+	  	</div>
+		<div class="form-group">
+			<label for="gnere">분야</label><br>
+			<label for="genre" th:text="${ book.genre }"></label><br>
+		</div>
+	    <div class="form-group">
+	    	<label for="info">도서정보</label><br>
+		    <textarea class="form-control" name="info" rows="3" th:text="${ book.info }"></textarea><br>
+		  </div>
+		<div class="form-group">
+			<label for="isbn">ISBN</label><br>
+			<label for="isbn" th:text="${ book.isbn }"></label><br>
+		</div>
+		<div class="form-group">
+		    <label for="author">저자</label><br>
+		    <label for="author" th:text="${ book.author }"></label><br>
+	  	</div>
+		<div class="form-group">
+		    <label for="plait">엮은이</label><br>
+		    <label for="plait" th:text="${ book.plait }"></label><br>
+		</div>
+		<div class="form-group">
+		    <label for="publisher">출판사</label><br>
+		    <label for="publisher" th:text="${ book.publisher }"></label><br>
+		</div>
+		
+		<input type="hidden" name="book_state_id" th:value="${ book.bookState.book_state_id }">
+		
+		<div class="form-group">
+		    <label for="remain">대출가능권수</label><br>
+		    <label for="remain" th:text="${ book.bookState.remain }"></label><br>
+		</div>
+			<button th:if="${ book.bookState.remain > 0}" type="submit" class="btn btn-primary">대여</button>	
+			<button th:if="${ book.bookState.remain <= 0}"type="submit" class="btn btn-primary" aria-disabled="true" disabled>대여불가</button>
+	</form>
+	<script>
+		var errorCode = "[[${errorCode}]]";
+		var errorMsg = "[[${errorMessage}]]";
+		if(errorCode == 500) {
+			alert(errorMsg);
+		}
+	</script>
+</div>
+</html>

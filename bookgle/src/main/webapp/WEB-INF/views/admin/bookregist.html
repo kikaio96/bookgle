@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{admin/fragments/template}"
+	>
+<head>
+	<title>도서등록</title>
+</head>
+<div layout:fragment="content">
+	<form method="post" th:action="@{/admin/book}">
+		<div class="form-group">
+		    <label for="name">도서명</label>
+		    <input type="text" class="form-control" name="name">
+	  	</div>
+		<div class="form-group">
+			<label for="isbn">분야</label>
+			<input type="text" class="form-control" name="genre">
+		</div>
+	    <div class="form-group">
+	    	<label for="info">도서정보</label>
+		    <textarea class="form-control" name="info" rows="3"></textarea>
+		  </div>
+		<div class="form-group">
+			<label for="isbn">ISBN</label>
+			<input type="text" class="form-control" name="isbn">
+		</div>
+		<div class="form-group">
+		    <label for="author">저자</label>
+		    <input type="text" class="form-control" name="author">
+	  	</div>
+		<div class="form-group">
+		    <label for="plait">엮은이</label>
+		    <input type="text" class="form-control" name="plait">
+		</div>
+		<div class="form-group">
+		    <label for="publisher">출판사</label>
+		    <input type="text" class="form-control" name="publisher">
+		</div>
+		<div class="form-group">
+		    <label for="total_count">보유권수</label>
+		    <input type="text" class="form-control" name="total_count">
+		</div>
+		<button type="submit" class="btn btn-primary">등록</button>
+	</form>
+</div>
+
+</html>

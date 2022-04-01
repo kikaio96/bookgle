@@ -1,0 +1,52 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.son.bookgle.dao.BookStateMapper">
+    <cache />
+    <select id="getBookStateById" parameterType="int" resultType="BookState">
+		SELECT
+			*
+		FROM 
+			book_state 
+		WHERE
+			book_state_id = #{book_state_id}
+    </select>
+
+    <select id="getBookStateByBookId" parameterType="long" resultType="BookState">
+		SELECT
+			*
+		FROM 
+			book_state 
+		WHERE
+			book_id = #{book_id}
+		FOR UPDATE
+    </select>
+
+    <insert id="insert" parameterType="BookState" useGeneratedKeys="true" keyProperty="book_state_id" keyColumn="book_state_id">
+		INSERT INTO 
+			book_state(book_id, total_count, remain)
+		VALUES
+			(#{book_id}, #{total_count}, #{remain})
+    </insert>
+
+    <delete id="delete" parameterType="long">
+		DELETE FROM book_state WHERE book_state_id = #{book_state_id}
+    </delete>
+
+    <update id="updateTotalCountById" parameterType="map">
+		UPDATE
+			book_state 
+		SET 
+			total_count = #{book_state.total_count}, remain = remain + #{remain}
+		WHERE 
+			book_state_id = #{book_state.book_state_id}
+    </update>
+
+    <update id="updateRemainById" parameterType="map">
+    	UPDATE
+    		book_state
+    	SET
+    		remain = remain + #{remain}
+    	WHERE 
+    		book_state_id = #{book_state.book_state_id}
+    </update>
+
+</mapper>

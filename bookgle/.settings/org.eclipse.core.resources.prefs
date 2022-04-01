@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/admin/bookinfo.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/admin/booklist.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/admin/fragments/footer.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/admin/fragments/header.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/admin/fragments/template.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/admin/userlist.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/admin/userregist.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/user/fragments/footer.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/user/fragments/header.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/user/fragments/login.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/user/fragments/template.html=UTF-8
+encoding/<project>=UTF-8

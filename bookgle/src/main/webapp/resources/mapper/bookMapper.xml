@@ -1,0 +1,77 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.son.bookgle.dao.BookMapper">
+    <cache />
+    
+    <resultMap type="BookState" id="BookState">
+    	<result column="book_id" property="book_id"/>
+    	<result column="book_state_id" property="book_state_id"/>
+    	<result column="total_count" property="total_count"/>
+    	<result column="remain" property="remain"/>
+    </resultMap>
+    
+    <resultMap type="Book" id="Book">
+    	<result column="book_id" property="book_id"/>
+    	<result column="name" property="name"/>
+    	<result column="info" property="info"/>
+    	<result column="isbn" property="isbn"/>
+    	<result column="genre" property="genre"/>
+    	<result column="author" property="author"/>
+    	<result column="plait" property="plait"/>
+    	<result column="publisher" property="publisher"/>
+    	<association property='bookState' resultMap='BookState'/>
+    </resultMap>
+
+    <select id="getBookList" parameterType="int" resultMap="Book">
+		SELECT
+			book.book_id, name, info, isbn, genre, author, plait, publisher,
+			book_state_id, total_count, remain
+		FROM
+			book
+		LEFT JOIN 
+			book_state
+		ON
+			book.book_id = book_state.book_id
+		ORDER BY
+			book_id
+		LIMIT
+			#{start}, #{limit}
+    </select>
+
+    <select id="getBook" parameterType="long" resultMap="Book">
+		SELECT 
+			book.book_id, name, info, isbn, genre, author, plait, publisher, 
+			book_state_id, total_count, remain
+		FROM
+			book 
+		LEFT JOIN 
+			book_state on book.book_id = book_state.book_id
+		WHERE
+			book.book_id = #{book_id}
+    </select>
+
+    <insert id="insert" parameterType="Book" useGeneratedKeys="true" keyProperty="book_id" keyColumn="book_id">
+		INSERT INTO 
+			book(name, info, isbn, genre, author, plait, publisher)
+		VALUES
+			(#{name}, #{info}, #{isbn}, #{genre}, #{author}, #{plait}, #{publisher})
+    </insert>
+
+    <delete id="delete" parameterType="long">
+		DELETE FROM book WHERE book_id = #{book_id}
+    </delete>
+
+    <update id="updateById" parameterType="Book">
+		UPDATE 
+			book
+		SET
+			name = #{name}, info = #{info}, isbn = #{isbn}, author = #{author}, plait = #{plait}, 
+			publisher = #{publisher}, genre = #{genre}
+		WHERE 
+			book_id = #{book_id}
+    </update>
+
+    <select id="bookCount" resultType="int">
+		SELECT count(*) FROM book
+    </select>
+
+</mapper>
