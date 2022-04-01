@@ -79,10 +79,11 @@ public class UserController {
 	public String userModify(@ModelAttribute User user, @RequestParam(name="password_confirm") String pwdConfirm, 
 							HttpSession session, RedirectAttributes redirectAttr) {
 		User userInfo = (User)session.getAttribute("userInfo");
-		
+
 		try {
 			userInfo.setPassword(user.getPassword());
 			userInfo.setPhone(user.getPhone());
+			userInfo.setBirthday(user.getBirthday());
 		} catch(Exception e) {
 			return "user/fragments/login";
 		}
