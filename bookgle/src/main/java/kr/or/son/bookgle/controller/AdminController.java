@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.son.bookgle.dto.Book;
 import kr.or.son.bookgle.dto.BookState;
@@ -75,9 +77,15 @@ public class AdminController {
 	}
 	
 	@PostMapping(path="/user")
-	public String userRegist(@ModelAttribute User user) {
+	public String userRegist(@ModelAttribute User user, RedirectAttributes redirectAttr) {
 		user.setPassword("1111");
-		userService.addUser(user);
+		try {
+			userService.addUser(user);
+		} catch(DataIntegrityViolationException e) {
+			redirectAttr.addFlashAttribute("errorCode", 500);
+			redirectAttr.addFlashAttribute("errorMessage", "이미 존재하는 아이디입니다.");
+			return "redirect:/admin/user";
+		}
 		return "redirect:/admin/users";
 	}
 	
